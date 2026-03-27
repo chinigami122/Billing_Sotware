@@ -1,6 +1,6 @@
 <img width="1213" height="599" alt="image" src="https://github.com/user-attachments/assets/a18d5c61-8843-45bf-9bfc-f9350c133f63" /># BillingSoftware 💸
 
-![BillingSoftware](https://img.shields.io/badge/BillingSoftware-v1.0-blue)
+![BillingSoftware]
 
 BillingSoftware is a full-stack Point-of-Sale (POS) and billing management system designed for small businesses and retail shops. Built with Spring Boot and React, it features role-based access: admins manage categories, items, users, and view activity logs, while regular users can explore items, create orders, process payments via Stripe, generate PDF receipts, and view dashboard analytics. Protected endpoints ensure secure access to administrative functions.
 
