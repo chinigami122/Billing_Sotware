@@ -1,4 +1,3 @@
-<img width="1213" height="599" alt="image" src="https://github.com/user-attachments/assets/a18d5c61-8843-45bf-9bfc-f9350c133f63" /># BillingSoftware 💸
 
 ![BillingSoftware]
 
