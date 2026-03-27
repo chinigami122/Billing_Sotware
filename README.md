@@ -1,4 +1,4 @@
-# BillingSoftware 💸
+<img width="1213" height="599" alt="image" src="https://github.com/user-attachments/assets/a18d5c61-8843-45bf-9bfc-f9350c133f63" /># BillingSoftware 💸
 
 ![BillingSoftware](https://img.shields.io/badge/BillingSoftware-v1.0-blue)
 
@@ -15,6 +15,20 @@ BillingSoftware is a full-stack Point-of-Sale (POS) and billing management syste
 - **Activity Logging** 📝: Audit trail of user actions for admin monitoring.
 - **Image Storage** 🖼️: Upload and store product images using MinIO (S3-compatible storage).
 - **Responsive Interface** 🎨: Seamless experience across devices with React and Bootstrap.
+
+## 📸 Screenshots
+
+![Dashboard](./screenshots/dashboard.png)
+![Explore & POS Page](./screenshots/explore.png)
+![Admin Settings & Activity Log](./screenshots/settings.png)
+
+## 🧠 Architecture Highlights
+
+As a developer, I focused heavily on writing clean, scalable, and secure code:
+- **Layered Architecture:** Strict separation of concerns between Controllers, Services, and Repositories.
+- **Data Protection (DTOs):** Raw database entities are *never* exposed to the frontend. I implemented Request and Response Data Transfer Objects (DTOs) to secure sensitive data.
+- **Zero-Trust Security:** Used Spring Security's `SecurityContextHolder` to securely extract the logged-in user's identity for Activity Logging, rather than trusting frontend payload data.
+- **Robust Error Handling:** Wrapped critical non-blocking operations (like background logging) in `try-catch` blocks to ensure the main checkout flow never crashes for the user.
 
 ## 🛠️ Tech Stack
 
