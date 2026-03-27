@@ -162,30 +162,29 @@ Follow these steps to set up the project locally:
    - MySQL on port `3306`
    - MinIO API on port `9000`, Console on port `9001`
 
-4. **Set Up the Backend**:
+4. **Set Up the Backend (Environment Variables)**:
    - Navigate to the backend directory:
      ```bash
      cd billingsoftwar
      ```
-   - Configure `src/main/resources/application.properties`:
-     ```properties
-     spring.datasource.url=jdbc:mysql://localhost:3306/billing_app
-     spring.datasource.username=root
-     spring.datasource.password=your_password
-     spring.jpa.hibernate.ddl-auto=update
-
-     # Stripe Configuration
-     stripe.api.key=your_stripe_secret_key
-
-     # MinIO Configuration
-     aws.accessKeyId=your_minio_access_key
-     aws.secretKey=your_minio_secret_key
-     aws.region=us-east-1
-     aws.bucket.name=billing
-     aws.s3.endpoint=http://localhost:9000
-
-     # JWT Configuration
-     jwt.secret.key=your_jwt_secret_key
+   - Create your environment file: Copy the provided `example.env` file and rename it to `.env`.
+     ```bash
+     cp example.env .env
+     ```
+   - Open the new `.env` file and fill in your secure credentials:
+     ```env
+     # Database
+     DB_URL=jdbc:mysql://localhost:3306/billing_app
+     DB_USERNAME=root
+     DB_PASSWORD=your_secure_password
+     
+     # Storage (MinIO)
+     AWS_ACCESS_KEY=minioadmin
+     AWS_SECRET_KEY=minioadmin
+     
+     # Security & Payments
+     JWT_SECRET_KEY=your_super_secret_jwt_key
+     STRIPE_API_KEY=sk_test_your_stripe_key
      ```
    - Build and run the Spring Boot application:
      ```bash
@@ -247,11 +246,12 @@ The `docker-compose.yml` includes:
 
 ## 🔒 Security Notes
 
-- JWT-based stateless authentication with 10-hour token expiration.
-- BCrypt password encryption.
-- Role-based access control (ADMIN, USER).
-- Activity Log API restricted to Admin users.
-- CORS configured for frontend development server.
+- **Environment Secrets:** All sensitive credentials (Stripe keys, Database passwords, JWT secrets) are managed via `.env` files and injected into `application.properties` to prevent accidental exposure on GitHub.
+- **Stateless Auth:** JWT-based stateless authentication with strict token expiration.
+- **Encryption:** BCrypt password encryption for all user accounts.
+- **RBAC:** Role-based access control (ADMIN, USER) explicitly protecting administrative endpoints.
+- **API Protection:** Activity Log API restricted solely to Admin users.
+- **CORS:** Configured exclusively for the frontend development server to prevent cross-origin attacks.
 
 ## 🤝 Contributing
 
