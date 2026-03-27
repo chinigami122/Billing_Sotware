@@ -1,0 +1,48 @@
+/* Keep OrderHistory on the same dark surface as the rest of the admin pages. */
+.orders-history-container {
+    padding: 20px;
+    min-height: calc(100vh - 5rem);
+    background-color: #2c3335;
+    color: #e2e8f0;
+    box-sizing: border-box;
+}
+
+.orders-history-container > header {
+    background-color: transparent;
+}
+
+/* --- Search Bar Styles --- */
+.search-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 350px;
+}
+
+.search-wrapper .search-icon {
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.custom-search-input {
+    background-color: #1e2426 !important; /* The hammer: Forces dark background */
+    border: 1px solid #3d4548 !important;
+    color: #e2e8f0 !important;
+    padding-left: 42px !important; /* The hammer: Forces text away from the icon */
+    border-radius: 8px;
+    box-shadow: none;
+    transition: all 0.3s ease;
+}
+
+.custom-search-input:focus {
+    background-color: #252b2d;
+    border-color: #5c6c70;
+    color: #ffffff;
+    box-shadow: 0 0 0 0.25rem rgba(92, 108, 112, 0.25);
+}
+
+.custom-search-input::placeholder {
+    color: #6c757d;
+}

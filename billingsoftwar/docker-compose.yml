@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: spring-boot-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: billing_app
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+  minio:
+    image: minio/minio
+    container_name: spring-boot-minio
+    ports:
+      - "9000:9000" # API Port (Spring Boot talks to this)
+      - "9001:9001" # Web UI Console Port (You log into this)
+    environment:
+      MINIO_ROOT_USER: minioadmin      # This acts as your AWS Access Key
+      MINIO_ROOT_PASSWORD: minioadmin  # This acts as your AWS Secret Key
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+
+volumes:
+  mysql_data:
+  minio_data:

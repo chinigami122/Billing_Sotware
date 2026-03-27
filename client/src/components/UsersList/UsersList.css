@@ -1,0 +1,31 @@
+.users-list-container .user-card {
+    background-color: #2c2c2c;
+    border: 1px solid #555;
+}
+
+.user-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    border: 3px solid white;
+    background-color: #ffc107;
+    color: #1f2324;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-right: 15px;
+}
+
+.user-info {
+    min-width: 0;
+}
+
+.user-info h5,
+.user-info p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+

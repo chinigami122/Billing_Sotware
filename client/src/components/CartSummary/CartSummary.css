@@ -1,0 +1,18 @@
+.cart-summary-content {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.cart-summary-actions,
+.cart-summary-place-order {
+	width: 100%;
+}
+
+.cart-summary-place-order {
+	margin-top: 12px;
+}
+
+.cart-summary-place-order .btn {
+	width: 100%;
+}
+
