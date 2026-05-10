@@ -1,18 +1,108 @@
-.cart-summary-content {
-	width: 100%;
-	box-sizing: border-box;
+.cart-summary-modern {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
-.cart-summary-actions,
-.cart-summary-place-order {
-	width: 100%;
+.summary-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-.cart-summary-place-order {
-	margin-top: 12px;
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.cart-summary-place-order .btn {
-	width: 100%;
+.row-label {
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-size: 0.9rem;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: normal;
 }
 
+.row-value {
+    color: var(--text-primary) !important;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.summary-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 12px 0;
+}
+
+.total-label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff !important;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.total-value {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--accent-secondary) !important;
+}
+
+.payment-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-payment {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+    font-size: 0.9rem;
+}
+
+.btn-payment:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-payment:active:not(:disabled) {
+    transform: scale(0.97);
+}
+
+.btn-cash-outline {
+    background: transparent;
+    border: 2px solid var(--success);
+    color: var(--success) !important;
+}
+
+.btn-cash-outline:hover:not(:disabled) {
+    background: var(--success);
+    color: #ffffff !important;
+}
+
+.btn-pay-online {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: #ffffff !important;
+    border: none;
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+}
+
+.btn-pay-online:hover:not(:disabled) {
+    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.4);
+    filter: brightness(1.1);
+}
+
+.btn-icon {
+    font-size: 1.1rem;
+}

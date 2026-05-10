@@ -1,48 +1,222 @@
-/* Keep OrderHistory on the same dark surface as the rest of the admin pages. */
-.orders-history-container {
-    padding: 20px;
-    min-height: calc(100vh - 5rem);
-    background-color: #2c3335;
-    color: #e2e8f0;
-    box-sizing: border-box;
+.orders-history-page {
+    padding: 1.5rem;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
 }
 
-.orders-history-container > header {
-    background-color: transparent;
+.page-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
 }
 
-/* --- Search Bar Styles --- */
-.search-wrapper {
+.search-box-wrapper-inline {
     position: relative;
-    width: 100%;
-    max-width: 350px;
-}
-
-.search-wrapper .search-icon {
-    top: 50%;
-    left: 15px;
-    transform: translateY(-50%);
-    z-index: 10;
-    pointer-events: none;
-}
-
-.custom-search-input {
-    background-color: #1e2426 !important; /* The hammer: Forces dark background */
-    border: 1px solid #3d4548 !important;
-    color: #e2e8f0 !important;
-    padding-left: 42px !important; /* The hammer: Forces text away from the icon */
-    border-radius: 8px;
-    box-shadow: none;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 8px 16px;
+    width: 320px;
     transition: all 0.3s ease;
 }
 
-.custom-search-input:focus {
-    background-color: #252b2d;
-    border-color: #5c6c70;
-    color: #ffffff;
-    box-shadow: 0 0 0 0.25rem rgba(92, 108, 112, 0.25);
+.search-box-wrapper-inline:focus-within {
+    border-color: var(--accent-primary);
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 0 15px rgba(108, 99, 255, 0.1);
 }
 
-.custom-search-input::placeholder {
-    color: #6c757d;
+.search-icon-inline {
+    color: var(--text-secondary);
+    margin-right: 10px;
+    font-size: 0.9rem;
+}
+
+.search-input-inline {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff !important;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+.search-input-inline::placeholder {
+    color: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* ============================
+   TABLE PANEL — wrapper
+   ============================ */
+.table-panel {
+    padding: 1.5rem;
+    overflow: visible;
+}
+
+/* ============================
+   MODERN TABLE — the actual <table>
+   ============================ */
+.modern-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    color: #ffffff;
+    table-layout: fixed;
+}
+
+.modern-table th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    color: rgba(255, 255, 255, 0.5) !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+/* Column widths */
+.modern-table th:nth-child(1) { width: 140px; }   /* Order ID */
+.modern-table th:nth-child(2) { width: 160px; }   /* Date */
+.modern-table th:nth-child(3) { width: 180px; }   /* Customer */
+.modern-table th:nth-child(4) { width: auto; }     /* Items — takes remaining */
+.modern-table th:nth-child(5) { width: 100px; }   /* Amount */
+.modern-table th:nth-child(6) { width: 110px; }   /* Status */
+.modern-table th:nth-child(7) { width: 80px; }    /* Receipt */
+
+.modern-table td {
+    padding: 0.75rem 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    color: #ffffff !important;
+    transition: background 0.2s ease;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.modern-table tbody tr {
+    transition: all 0.2s ease;
+}
+
+.modern-table tbody tr:hover {
+    background-color: rgba(108, 99, 255, 0.06);
+}
+
+.modern-table tbody tr:hover td:first-child {
+    box-shadow: inset 3px 0 0 var(--accent-primary);
+}
+
+.modern-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ============================
+   Cell-specific styles
+   ============================ */
+.monospace-id {
+    font-family: 'Courier New', monospace;
+    color: var(--accent-secondary) !important;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.price-accent {
+    color: var(--success) !important;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+/* Customer name */
+.modern-table .fw-600 {
+    font-weight: 600;
+    color: #ffffff !important;
+}
+
+/* Customer phone */
+.modern-table .text-secondary {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* ============================
+   Status Pills
+   ============================ */
+.status-pill {
+    padding: 4px 12px;
+    border-radius: 50rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.status-pill.success {
+    background: var(--success);
+    color: #ffffff !important;
+}
+
+.status-pill.warning {
+    background: var(--warning);
+    color: #000000 !important;
+}
+
+/* ============================
+   Action Icon Buttons (Download / Disabled)
+   ============================ */
+.btn-action-icon {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.btn-action-icon.primary {
+    background: rgba(108, 99, 255, 0.15);
+    color: var(--accent-primary) !important;
+}
+
+.btn-action-icon.primary:hover {
+    background: var(--accent-primary);
+    color: #ffffff !important;
+}
+
+.btn-action-icon.disabled {
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.2) !important;
+    cursor: not-allowed;
+}
+
+/* ============================
+   Table responsiveness
+   ============================ */
+@media (max-width: 992px) {
+    .table-panel {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .modern-table {
+        min-width: 850px;
+        table-layout: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header-actions {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .search-box-wrapper-inline {
+        width: 100%;
+    }
 }

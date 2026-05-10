@@ -1,25 +1,25 @@
 import {useContext, useEffect, useState} from "react";
-import {assets} from "../../assets/assets.js";
 import toast from "react-hot-toast";
 import {addCategory} from "../../service/categoryService.js";
 import {AppContext} from "../../context/AppContext.jsx";
+import './CategoryForm.css';
 
 const getInitialCategoryData = () => ({
     name: "",
     description: "",
-    bgColor: "#2c2c2c"
+    bgColor: "#1a1d27"
 });
 
 const CategoryForm = () => {
     const {setCategories} = useContext(AppContext);
     const [loading , setLoading] = useState(false);
     const [image , setImage] = useState(null);
-    const [previewUrl, setPreviewUrl] = useState(assets.upload);
+    const [previewUrl, setPreviewUrl] = useState(null);
     const [data , setData] = useState(getInitialCategoryData);
 
     useEffect(() => {
         if (!image) {
-            setPreviewUrl(assets.upload);
+            setPreviewUrl(null);
             return;
         }
 
@@ -30,129 +30,114 @@ const CategoryForm = () => {
     }, [image]);
 
     const onChangeHandler = (e) => {
-        const value = e.target.value;
-        const name = e.target.name;
-
-        setData((data) => ({
-            ...data,
-            [name]: value
-        }));
+        const { name, value } = e.target;
+        setData((prev) => ({ ...prev, [name]: value }));
     };
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
-        setLoading(true);
+        
         if(!image){
-            toast.error("Select image for category");
-            setLoading(false);
+            toast.error("Please select a category icon");
             return;
         }
 
+        setLoading(true);
         const formData = new FormData();
         formData.append("category" , JSON.stringify(data));
         formData.append("file" , image);
+        
         try {
             const response = await addCategory(formData);
             if(response.status === 201){
                 setCategories((prev) => [...prev, response.data]);
-                toast.success("Category add");
+                toast.success("Category added successfully");
                 setData(getInitialCategoryData());
                 setImage(null);
             }
-        }catch (err){
-            console.error(err)
-            toast.error("Error adding category")
+        } catch (err){
+            console.error(err);
+            toast.error("Error adding category");
         } finally {
             setLoading(false);
         }
-    }
-
-
+    };
 
     return (
-        <div className="mx-2 mt-2">
-            <div className="row">
-                <div className="card col-md-12 form-container">
-                    <div className="card-body">
-                        <form onSubmit={onSubmitHandler}>
-
-                            <div className="mb-3">
-                                <label htmlFor="image" className="form-label">
-                                    <img
-                                        src={previewUrl}
-                                        alt="preview"
-                                        width="48"
-                                        height="48"
-                                    />
-                                </label>
-
-                                <input
-                                    type="file"
-                                    name="image"
-                                    id="image"
-                                    className="form-control"
-                                    hidden onChange={(e) => setImage(e.target.files[0])}
-                                />
+        <div className="glass-card p-4 form-card-modern">
+            <h5 className="mb-4 fw-bold">New Category</h5>
+            <form onSubmit={onSubmitHandler}>
+                <div className="upload-container-modern mb-4">
+                    <label htmlFor="cat-image" className="upload-label-styled">
+                        {previewUrl ? (
+                            <img src={previewUrl} alt="Preview" className="upload-preview" />
+                        ) : (
+                            <div className="upload-placeholder">
+                                <i className="bi bi-tag fs-1 mb-2"></i>
+                                <span>Select Icon</span>
                             </div>
-                            <div className="mb-3">
-                                <label htmlFor="name" className="form-label">
-                                    Name
-                                </label>
+                        )}
+                    </label>
+                    <input
+                        type="file"
+                        name="image"
+                        id="cat-image"
+                        hidden
+                        onChange={(e) => setImage(e.target.files[0])}
+                    />
+                </div>
 
-                                <input
-                                    type="text"
-                                    name="name"
-                                    id="name"
-                                    className="form-control"
-                                    placeholder="Category Name"
-                                    onChange={onChangeHandler}
-                                    value={data.name}
-                                />
-                                <label htmlFor="description" className="form-label">
-                                    Description
-                                </label>
-                                <textarea
-                                    rows="5"
-                                    name="description"
-                                    id="description"
-                                    className="form-control"
-                                    placeholder="Write content here ..."
-                                    onChange={onChangeHandler}
-                                    value={data.description}
-                                ></textarea>
-                                <div className="mb-3">
-                                    <label htmlFor="bgcolor" className="form-label">
-                                        Background color
-                                    </label>
-                                    <br />
+                <div className="form-group-modern mb-3">
+                    <label className="label-modern">Category Name</label>
+                    <input
+                        type="text"
+                        name="name"
+                        className="input-custom"
+                        placeholder="e.g. Smartphones"
+                        style={{width: '100%'}}
+                        onChange={onChangeHandler}
+                        value={data.name}
+                        required
+                    />
+                </div>
 
-                                    <input
-                                        type="color"
-                                        name="bgColor"
-                                        id="bgcolor"
-                                        className="form-control form-control-color"
-                                        title="Choose background color"
-                                        onChange={onChangeHandler}
-                                        value={data.bgColor}
-                                    />
-                                </div>
+                <div className="form-group-modern mb-3">
+                    <label className="label-modern">Description</label>
+                    <textarea
+                        rows="3"
+                        name="description"
+                        className="input-custom"
+                        placeholder="Category details..."
+                        style={{width: '100%'}}
+                        onChange={onChangeHandler}
+                        value={data.description}
+                    ></textarea>
+                </div>
 
-                                <button
-                                    type="submit"
-                                    className="btn btn-warning w-100"
-                                    disabled={loading}
-                                >
-                                    {loading ? "Loading" : "Submit"}
-                                </button>
-
-
-                            </div>
-
-
-                        </form>
+                <div className="form-group-modern mb-4">
+                    <label className="label-modern">Accent Color</label>
+                    <div className="color-picker-wrapper">
+                        <input
+                            type="color"
+                            name="bgColor"
+                            className="color-input-custom"
+                            onChange={onChangeHandler}
+                            value={data.bgColor}
+                        />
+                        <span className="color-value-text">{data.bgColor}</span>
                     </div>
                 </div>
-            </div>
+
+                <button
+                    type="submit"
+                    className="btn-custom w-100 py-3 mt-2"
+                    disabled={loading}
+                    style={{background: 'linear-gradient(90deg, var(--accent-primary), var(--accent-secondary))', color: 'white'}}
+                >
+                    <i className="bi bi-plus-lg me-2"></i>
+                    {loading ? "Adding..." : "Create Category"}
+                </button>
+            </form>
         </div>
     );
 };

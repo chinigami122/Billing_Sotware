@@ -18,10 +18,11 @@ const ItemsList = () => {
     };
 
     const handleDelete = async (itemId) => {
+        if (!window.confirm("Are you sure you want to delete this item?")) return;
+        
         try {
             const response = await deleteItem(itemId);
             if (response.status === 204) {
-                // Filter out the deleted item
                 const updatedItems = itemsData.filter((item) => item.itemId !== itemId);
                 setItemsData(updatedItems);
                 toast.success("Item deleted");
@@ -35,62 +36,63 @@ const ItemsList = () => {
     };
 
     return (
-        <div className="items-list-container" style={{ height: "100vh", overflowY: "auto", overflowX: "hidden" }}>
-            <div className="row pe-2">
-                <div className="input-group mb-3">
+        <div className="items-list-container-modern">
+            <div className="search-header-modern mb-4">
+                <div className="input-group-custom">
+                    <i className="bi bi-search input-icon-custom"></i>
                     <input
                         type="text"
-                        name="keyword"
-                        id="keyword"
-                        placeholder="Search items"
-                        className="form-control"
+                        placeholder="Search items..."
+                        className="input-custom-field"
                         onChange={(e) => setSearchTerm(e.target.value)}
                         value={searchTerm}
                     />
-                    <span className="input-group-text bg-warning">
-                        <i className="bi bi-search"></i>
-                    </span>
                 </div>
             </div>
 
-            <div className="row g-3 pe-2">
+            <div className="items-scroll-area">
                 {filteredItems.map((item) => (
-                    <div key={item.itemId} className="col-12">
-                        <div className="card item-card p-3 mb-2">
-                            <div className="d-flex justify-content-between align-items-center">
-                                <div className="d-flex align-items-center">
-                                    <div className="item-img-container">
-                                        <img
-                                            src={item.imgUrl}
-                                            alt={item.name}
-                                            className="item-img"
-                                            onError={(e) => {
-                                                e.target.style.display = 'none';
-                                            }}
-                                        />
-                                    </div>
-                                    <div className="ms-3 d-flex flex-column">
-                                        <span className="text-white fw-bold">{item.name}</span>
-                                        <span className="text-secondary small mb-1">
-                                            Category: {getCategoryName(item.categoryId)}
-                                        </span>
-                                        <span className="badge bg-warning text-dark align-self-start rounded-pill px-3">
-                                        ${item.price}
-                                        </span>
-                                    </div>  
-                                </div>
-
-                                <button
-                                    className="btn btn-danger btn-sm rounded-2"
-                                    style={{ width: '38px', height: '38px' }}
-                                    onClick={() => handleDelete(item.itemId)}
-                                >
-                                    <i className="bi bi-trash"></i>
-                                </button>
+                    <div key={item.itemId} className="glass-card item-horizontal-card mb-3">
+                        <div className="item-img-wrapper-mini">
+                            <img
+                                src={item.imgUrl}
+                                alt={item.name}
+                                className="item-img-mini"
+                            />
+                        </div>
+                        
+                        <div className="item-info-extended">
+                            <div className="item-main-details">
+                                <h6 className="item-title">{item.name}</h6>
+                                <span className="item-category-pill">{getCategoryName(item.categoryId)}</span>
                             </div>
+                            
+                            <div className="item-price-tag">
+                                ${item.price}
+                            </div>
+                        </div>
+
+                        <div className="item-actions-panel">
+                            <button className="btn-action edit" title="Edit">
+                                <i className="bi bi-pencil"></i>
+                            </button>
+                            <button 
+                                className="btn-action delete" 
+                                title="Delete"
+                                onClick={() => handleDelete(item.itemId)}
+                            >
+                                <i className="bi bi-trash"></i>
+                            </button>
                         </div>
                     </div>
                 ))}
+                
+                {filteredItems.length === 0 && (
+                    <div className="text-center py-5 opacity-50">
+                        <i className="bi bi-box-seam fs-1 mb-2"></i>
+                        <p>No products found</p>
+                    </div>
+                )}
             </div>
         </div>
     );

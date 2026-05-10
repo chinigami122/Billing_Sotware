@@ -1,7 +1,315 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
-*{
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    font-family: 'Outfit', sans-serif !important;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root {
+  --bg-primary: #0f1117;
+  --bg-secondary: #1a1d27;
+  --bg-card: #1e2235;
+  --accent-primary: #6c63ff;
+  --accent-secondary: #00d4ff;
+  --success: #00c896;
+  --warning: #f5a623;
+  --danger: #ff4d6d;
+  --text-primary: #ffffff;
+  --text-secondary: #8b8fa8;
+  --border: rgba(255, 255, 255, 0.07);
 }
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: 'Inter', sans-serif !important;
+}
+
+html, body, #root {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  min-height: 100vh;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* ============================
+   Bootstrap Dark-Theme Overrides
+   ============================ */
+
+/* Kill ALL Bootstrap white backgrounds */
+.card,
+.form-control,
+.form-select,
+.input-group-text,
+.list-group-item,
+.modal-content,
+.dropdown-menu,
+.table {
+  background-color: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border) !important;
+}
+
+/* Bootstrap text color overrides */
+.text-dark { color: var(--text-primary) !important; }
+.bg-light { background-color: var(--bg-secondary) !important; }
+.bg-white { background-color: var(--bg-primary) !important; }
+
+/* Form controls dark */
+.form-control,
+.form-select {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border) !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: rgba(255, 255, 255, 0.07) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--accent-primary) !important;
+  box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2) !important;
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Form labels */
+.form-label {
+  color: var(--text-secondary) !important;
+}
+
+/* ============================
+   Typography
+   ============================ */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text-primary) !important;
+}
+
+p, span, div, td, th, li, a {
+  color: inherit;
+}
+
+label, .tag {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+/* ============================
+   Glass Card
+   ============================ */
+.glass-card {
+  background-color: var(--bg-card);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  backdrop-filter: blur(10px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: var(--text-primary);
+}
+
+.glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+/* ============================
+   Buttons
+   ============================ */
+.btn-custom {
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: #ffffff !important;
+  padding: 12px 24px;
+}
+
+.btn-custom:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+}
+
+.btn-custom:active {
+  transform: scale(0.97);
+}
+
+.btn-custom:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================
+   Inputs
+   ============================ */
+.input-custom {
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary) !important;
+  padding: 10px 16px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-custom:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.input-custom::placeholder {
+  color: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Select option text (dropdown is system UI, make it readable) */
+.input-custom option {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+/* ============================
+   Search Bar (used in Items, Categories, Users lists)
+   ============================ */
+.input-group-custom {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+}
+
+.input-group-custom:focus-within {
+  border-color: var(--accent-primary);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 15px rgba(108, 99, 255, 0.1);
+}
+
+.input-icon-custom {
+  color: var(--text-secondary);
+  margin-right: 10px;
+  font-size: 0.9rem;
+}
+
+.input-custom-field {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff !important;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.input-custom-field::placeholder {
+  color: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* ============================
+   Row hover
+   ============================ */
+.row-hover:hover {
+  background-color: rgba(108, 99, 255, 0.06);
+}
+
+/* ============================
+   Scrollbars
+   ============================ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-primary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-secondary);
+}
+
+/* ============================
+   Form floating labels
+   ============================ */
+.form-floating > label {
+  color: var(--text-secondary);
+}
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+  color: var(--accent-primary);
+}
+
+/* ============================
+   Page Transitions
+   ============================ */
+.page-container {
+  animation: fadeIn 0.2s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================
+   Skeleton Loading
+   ============================ */
+.skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.badge-pill {
+  border-radius: 50rem;
+  padding: 0.25em 0.6em;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+/* ============================
+   Page title helper
+   ============================ */
+.page-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #ffffff !important;
+}
+
+/* ============================
+   Global text visibility safety net
+   ============================ */
+.text-white { color: #ffffff !important; }
+.text-light { color: #e2e8f0 !important; }
+.fw-600 { font-weight: 600; }
+.fw-bold { font-weight: 700; }

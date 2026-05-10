@@ -13,30 +13,29 @@ const DisplayItems = ({selectedCategory}) => {
     }).filter(item => item.name.toLowerCase().includes(searcheText.toLowerCase()));
 
     return (
-        <div className="p-3">
-            <div className="d-flex justify-content-between align-items-center mb-4">
-                <div></div>
-                <div>
-                    <SearchBox onSearch={setSearchText}
-                    />
-                </div>
-
+        <div className="display-items-container">
+            <div className="search-bar-wrapper">
+                <SearchBox onSearch={setSearchText} />
             </div>
-            <div className="row g-3">
+            
+            <div className="product-grid">
                 {filteredItems.map((item, index) => (
-                    <div
+                    <Item
                         key={index}
-                        className="col-md-4 col-sm-6"
-                    >
-                        <Item
-                            itemName={item.name}
-                            itemPrice={item.price}
-                            itemImage={item.imgUrl}
-                            itemId={item.itemId}
-                        />
-                    </div>
+                        itemName={item.name}
+                        itemPrice={item.price}
+                        itemImage={item.imgUrl}
+                        itemId={item.itemId}
+                        stock={item.stock || 0}
+                    />
                 ))}
             </div>
+            {filteredItems.length === 0 && (
+                <div className="no-items-message">
+                    <i className="bi bi-search mb-3 fs-1 opacity-25"></i>
+                    <p>No products found matching your search.</p>
+                </div>
+            )}
         </div>
     );
 };

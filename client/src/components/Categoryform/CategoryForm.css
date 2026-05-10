@@ -1,0 +1,29 @@
+.color-picker-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    border-radius: 10px;
+}
+
+.color-input-custom {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.color-input-custom::-webkit-color-swatch {
+    border: none;
+    border-radius: 4px;
+}
+
+.color-value-text {
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}

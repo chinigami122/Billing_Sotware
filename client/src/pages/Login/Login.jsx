@@ -38,42 +38,47 @@ const Login = () =>{
         }
     }
     return(
-        <div className="bg-light d-flex align-items-center justify-content-center vh-100 login-background">
-            <div className="card shadow-lg w-100" style={{ maxWidth: "480px" }}>
-                <div className="card-body">
-
-                    <div className="text-center">
-                        <h1 className="card-title">Sign in</h1>
-                        <p className="card-text text-muted">
-                            Sign in below to access your account
-                        </p>
+        <div className="login-page">
+            <div className="login-card">
+                {/* --- Branding --- */}
+                <div className="login-brand">
+                    <div className="login-logo-icon">
+                        <i className="bi bi-lightning-charge-fill"></i>
                     </div>
-
-                    <div className="mt-4">
-                        <form onSubmit={onSubmitHandler}>
-                            <div className="mb-4">
-                                <label htmlFor="email" className="form-label text-muted">
-                                    Email address
-                                </label>
-                                <input type="text" name="email" id="email" placeholder="yourname@gmail.com" className="form-control" onChange={onChangeHandler} value={data.email}/>
-
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="password" className="form-label text-muted">
-                                    Password
-                                </label>
-                                <input type="password" name="password" id="password" placeholder="**********" className="form-control" onChange={onChangeHandler} value={data.password}/>
-
-                            </div>
-                            <div className="d-grid">
-                                <button type="submit" className="btn btn-dark btn-lg" disabled={loading}>
-                                    {loading ? "Signing in..." : "Sign in"}
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-
+                    <h1 className="login-logo-text">
+                        Electro<span className="accent">Hub</span>
+                    </h1>
+                    <p className="login-subtitle">Sign in to access your dashboard</p>
                 </div>
+
+                {/* --- Form --- */}
+                <form onSubmit={onSubmitHandler}>
+                    <div className="login-field">
+                        <label htmlFor="email">Email address</label>
+                        <input 
+                            type="text" 
+                            name="email" 
+                            id="email" 
+                            placeholder="yourname@gmail.com" 
+                            onChange={onChangeHandler} 
+                            value={data.email}
+                        />
+                    </div>
+                    <div className="login-field">
+                        <label htmlFor="password">Password</label>
+                        <input 
+                            type="password" 
+                            name="password" 
+                            id="password" 
+                            placeholder="••••••••" 
+                            onChange={onChangeHandler} 
+                            value={data.password}
+                        />
+                    </div>
+                    <button type="submit" className="login-btn" disabled={loading}>
+                        {loading ? "Signing in..." : "Sign in"}
+                    </button>
+                </form>
             </div>
         </div>
     )

@@ -15,13 +15,8 @@ const UsersForm = ({ setUsers }) => {
     const [data, setData] = useState(getInitialUserData);
 
     const onChangeHandler = (e) => {
-        const value = e.target.value;
-        const name = e.target.name;
-
-        setData((prev) => ({
-            ...prev,
-            [name]: value
-        }));
+        const { name, value } = e.target;
+        setData((prev) => ({ ...prev, [name]: value }));
     };
 
     const onSubmitHandler = async (e) => {
@@ -30,16 +25,11 @@ const UsersForm = ({ setUsers }) => {
 
         try {
             const response = await addUser(data);
-
-            // Adjust status if your backend returns a different one
             if (response.status === 201 || response.status === 200) {
-                toast.success("User added");
-
-                // If backend returns created user object, append it
+                toast.success("Team member added");
                 if (response.data) {
                     setUsers((prev) => [...prev, response.data]);
                 }
-
                 setData(getInitialUserData());
             }
         } catch (error) {
@@ -51,67 +41,61 @@ const UsersForm = ({ setUsers }) => {
     };
 
     return (
-        <div className="mx-2 mt-2">
-            <div className="row">
-                <div className="card col-md-12 form-container">
-                    <div className="card-body">
-                        <form onSubmit={onSubmitHandler}>
-                            <div className="mb-3">
-                                <label htmlFor="name" className="form-label">
-                                    Name
-                                </label>
-
-                                <input
-                                    type="text"
-                                    name="name"
-                                    id="name"
-                                    className="form-control"
-                                    placeholder="Jhon Deo"
-                                    onChange={onChangeHandler}
-                                    value={data.name}
-                                />
-
-                                <label htmlFor="email" className="form-label">
-                                    Email
-                                </label>
-
-                                <input
-                                    type="email"
-                                    name="email"
-                                    id="email"
-                                    className="form-control"
-                                    placeholder="yourname@gmail.com"
-                                    onChange={onChangeHandler}
-                                    value={data.email}
-                                />
-
-                                <label htmlFor="password" className="form-label">
-                                    Password
-                                </label>
-
-                                <input
-                                    type="password"
-                                    name="password"
-                                    id="password"
-                                    className="form-control"
-                                    placeholder="**********"
-                                    onChange={onChangeHandler}
-                                    value={data.password}
-                                />
-                                <br />
-
-                                <button
-                                    type="submit"
-                                    className="btn btn-warning w-100"
-                                    disabled={loading}
-                                >
-                                    {loading ? "Loading" : "Save"}
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+        <div className="glass-card p-4 form-card-modern">
+            <h5 className="mb-4 fw-bold">Add Team Member</h5>
+            <form onSubmit={onSubmitHandler}>
+                <div className="form-group-modern mb-3">
+                    <label className="label-modern">Full Name</label>
+                    <input
+                        type="text"
+                        name="name"
+                        className="input-custom"
+                        placeholder="e.g. John Doe"
+                        style={{width: '100%'}}
+                        onChange={onChangeHandler}
+                        value={data.name}
+                        required
+                    />
                 </div>
-            </div>
+
+                <div className="form-group-modern mb-3">
+                    <label className="label-modern">Email Address</label>
+                    <input
+                        type="email"
+                        name="email"
+                        className="input-custom"
+                        placeholder="email@example.com"
+                        style={{width: '100%'}}
+                        onChange={onChangeHandler}
+                        value={data.email}
+                        required
+                    />
+                </div>
+
+                <div className="form-group-modern mb-4">
+                    <label className="label-modern">Initial Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        className="input-custom"
+                        placeholder="••••••••"
+                        style={{width: '100%'}}
+                        onChange={onChangeHandler}
+                        value={data.password}
+                        required
+                    />
+                </div>
+
+                <button
+                    type="submit"
+                    className="btn-custom w-100 py-3 mt-2"
+                    disabled={loading}
+                    style={{background: 'linear-gradient(90deg, var(--accent-primary), var(--accent-secondary))', color: 'white'}}
+                >
+                    <i className="bi bi-person-plus me-2"></i>
+                    {loading ? "Adding..." : "Add Member"}
+                </button>
+            </form>
         </div>
     );
 };

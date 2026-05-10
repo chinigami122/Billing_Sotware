@@ -1,46 +1,55 @@
 import './CartItems.css';
 import {AppContext} from "../../context/AppContext.jsx";
 import {useContext} from "react";
+
 const CartItems = () => {
     const {cartItems , removeFromCart , updateCartItemQuantity} = useContext(AppContext);
+    
     return(
-        <div className="p-3 h-100 overflow-y-auto">
+        <div className="cart-items-wrapper">
             {cartItems.length === 0 ? (
-                <p className="text-light">
-                    Your cart is empty.
-                </p>
+                <div className="empty-cart-message">
+                    <i className="bi bi-cart-x fs-1 opacity-25 mb-2"></i>
+                    <p>Your cart is empty.</p>
+                </div>
             ) : (
-                <div className="cart-items-list">
+                <div className="cart-items-list-modern">
                     {cartItems.map((item, index) => (
-                        <div key={index} className="cart-item mb-3 p-3 bg-dark rounded">
-                            <div className="d-flex justify-content-between align-items-center">
-                                <h6 className="mb-0 text-light">{item.name}</h6>
-                                <p className="mb-0 text-light">
-                                    ₹{(item.price * item.quantity).toFixed(2)}
-                                </p>
-                            </div>
-
-                            <div className="d-flex justify-content-between align-items-center">
-                                <div className="d-flex align-items-center gap-2">
-                                    <button
-                                        className="btn btn-danger btn-sm"
-                                        onClick={() => updateCartItemQuantity(item.id, item.quantity - 1)}
-                                        disabled={item.quantity === 1}
+                        <div key={index} className="cart-item-modern">
+                            <img src={item.imgUrl} alt={item.name} className="cart-item-thumb" />
+                            
+                            <div className="cart-item-info">
+                                <div className="cart-item-header">
+                                    <h6 className="cart-item-name">{item.name}</h6>
+                                    <button 
+                                        className="cart-item-remove"
+                                        onClick={() => removeFromCart(item.id)}
                                     >
-                                        <i className="bi bi-dash"></i>
-                                    </button>
-                                    <span className="text-light">{item.quantity}</span>
-                                    <button className="btn btn-primary btn-sm"
-                                    onClick={() => updateCartItemQuantity(item.id, item.quantity + 1)}
-                                    >
-                                        <i className="bi bi-plus"></i>
+                                        <i className="bi bi-x"></i>
                                     </button>
                                 </div>
-                                <button className="btn btn-danger btn-sm" style={{ width: "auto" }}
-                                onClick={() => removeFromCart(item.id)}
-                                >
-                                    <i className="bi bi-trash"></i>
-                                </button>
+                                
+                                <div className="cart-item-controls">
+                                    <div className="qty-picker">
+                                        <button
+                                            className="qty-btn"
+                                            onClick={() => updateCartItemQuantity(item.id, item.quantity - 1)}
+                                            disabled={item.quantity === 1}
+                                        >
+                                            <i className="bi bi-dash"></i>
+                                        </button>
+                                        <span className="qty-value">{item.quantity}</span>
+                                        <button 
+                                            className="qty-btn"
+                                            onClick={() => updateCartItemQuantity(item.id, item.quantity + 1)}
+                                        >
+                                            <i className="bi bi-plus"></i>
+                                        </button>
+                                    </div>
+                                    <div className="cart-item-price">
+                                        ${(item.price * item.quantity).toFixed(2)}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     ))}

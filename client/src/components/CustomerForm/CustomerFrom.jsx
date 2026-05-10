@@ -3,7 +3,6 @@ import { AppContext } from "../../context/AppContext.jsx";
 import './CustomerFrom.css';
 
 const CustomerFrom = () => {
-    // 1. Pull the state and setters directly from our AppContext
     const {
         customerName,
         setCustomerName,
@@ -12,28 +11,26 @@ const CustomerFrom = () => {
     } = useContext(AppContext);
 
     return (
-        <div className="customer-form-card">
-            {/* Name Input */}
-            <div className="customer-input-wrapper mb-2">
-                <i className="bi bi-person-fill customer-input-icon"></i>
+        <div className="customer-form-card-modern">
+            <div className="input-group-custom mb-3">
+                <i className="bi bi-person input-icon-custom"></i>
                 <input
                     type="text"
-                    className="customer-input"
-                    placeholder="Customer name"
+                    className="input-custom-field"
+                    placeholder="Customer Name"
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
                 />
             </div>
 
-            {/* Phone Input */}
-            <div className="customer-input-wrapper">
-                <i className="bi bi-telephone-fill customer-input-icon"></i>
+            <div className="input-group-custom">
+                <i className="bi bi-phone input-icon-custom"></i>
                 <input
                     type="tel"
-                    className="customer-input"
-                    placeholder="Phone number"
-                    value={mobileNumber} // Changed from customerPhone to match context
-                    onChange={(e) => setMobileNumber(e.target.value)} // Changed from setCustomerPhone
+                    className="input-custom-field"
+                    placeholder="Phone Number"
+                    value={mobileNumber}
+                    onChange={(e) => setMobileNumber(e.target.value)}
                     inputMode="tel"
                 />
             </div>

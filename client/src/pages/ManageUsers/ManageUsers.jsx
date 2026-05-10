@@ -6,43 +6,35 @@ import { fetchUsers } from "../../service/UserService.js";
 import toast from "react-hot-toast";
 
 const ManageUsers = () => {
-
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-
         async function getUsers() {
             try {
                 setLoading(true);
-
                 const response = await fetchUsers();
                 setUsers(response.data);
-
             } catch (error) {
                 console.error(error);
                 toast.error("Unable to fetch users");
-
             } finally {
                 setLoading(false);
             }
         }
-
-        getUsers();   // ✅ correct
-
+        getUsers();
     }, []);
 
-    return(
-        <div className="users-container text-light">
+    return (
+        <div className="users-container-modern page-container">
             <div className="left-column">
                 <UsersForm setUsers={setUsers}/>
             </div>
-
             <div className="right-column">
-                <UsersList users={users} setUsers={setUsers}/>
+                <UsersList users={users} setUsers={setUsers} loading={loading}/>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default ManageUsers;

@@ -1,55 +1,40 @@
-.customer-form-card {
-    background-color: #1e1e1e;
-    border: 1px solid #333;
-    border-radius: 12px;
-    padding: 10px;
+.customer-form-card-modern {
+    padding: 0;
 }
 
-.customer-input-wrapper {
+.customer-form-card-modern .input-group-custom {
     display: flex;
     align-items: center;
-    background-color: #252525;
-    border: 2px solid #333;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 10px;
-    padding: 6px 10px;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    padding: 10px 14px;
+    transition: all 0.3s ease;
 }
 
-.customer-input-wrapper:focus-within {
-    border-color: #ffc107;
-    box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.12);
+.customer-form-card-modern .input-group-custom:focus-within {
+    border-color: var(--accent-primary);
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 0 15px rgba(108, 99, 255, 0.1);
 }
 
-.customer-input-icon {
-    color: #ffc107;
-    margin-right: 8px;
-    font-size: 14px;
+.customer-form-card-modern .input-icon-custom {
+    color: var(--accent-primary);
+    margin-right: 12px;
+    font-size: 1rem;
+    flex-shrink: 0;
 }
 
-.customer-input {
+.customer-form-card-modern .input-custom-field {
     width: 100%;
     border: none;
     outline: none;
     background: transparent;
-    color: #fff;
-    font-size: 13px;
+    color: #ffffff !important;
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
-.customer-input::placeholder {
-    color: #9ca3af;
+.customer-form-card-modern .input-custom-field::placeholder {
+    color: rgba(255, 255, 255, 0.35) !important;
 }
-
-@media (max-width: 1100px) {
-    .customer-form-card {
-        padding: 8px;
-    }
-
-    .customer-input-wrapper {
-        padding: 5px 9px;
-    }
-
-    .customer-input {
-        font-size: 12px;
-    }
-}
-

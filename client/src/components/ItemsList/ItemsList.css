@@ -1,32 +1,145 @@
-.items-list-container .item-card {
-    background-color: #1e1e1e;
-    border: 1px solid #333;
-    transition: transform 0.2s;
-    border-radius: 10px;
+.items-list-container-modern {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: var(--text-primary);
 }
-.item-img-container {
-    background-color: white;
+
+.item-horizontal-card {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    gap: 1.25rem;
+    transition: all 0.3s ease;
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    color: #ffffff;
+}
+
+.item-horizontal-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateX(5px);
+}
+
+.item-img-wrapper-mini {
     width: 60px;
     height: 60px;
-    border-radius: 10px;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5px;
 }
-.item-img {
+
+.item-img-mini {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
 }
 
-.item-info {
+.item-info-extended {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     min-width: 0;
 }
 
-.item-info h5,
-.item-info p {
+.item-main-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.item-title {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ffffff !important;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.item-category-pill {
+    font-size: 0.7rem;
+    color: var(--text-secondary) !important;
+    background: rgba(255,255,255,0.05);
+    padding: 2px 8px;
+    border-radius: 50rem;
+    width: fit-content;
+}
+
+.item-price-tag {
+    font-weight: 700;
+    color: var(--warning) !important;
+    background: rgba(245, 166, 35, 0.1);
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
     white-space: nowrap;
+}
+
+.item-actions-panel {
+    display: flex;
+    gap: 8px;
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+}
+
+.item-horizontal-card:hover .item-actions-panel {
+    opacity: 1;
+}
+
+.btn-action {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: rgba(255,255,255,0.05);
+    color: var(--text-secondary);
+}
+
+.btn-action.edit:hover {
+    background: var(--accent-primary);
+    color: white;
+}
+
+.btn-action.delete:hover {
+    background: var(--danger);
+    color: white;
+}
+
+.items-scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+/* Custom scrollbar for items-scroll-area */
+.items-scroll-area::-webkit-scrollbar {
+    width: 4px;
+}
+
+.items-scroll-area::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.items-scroll-area::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 10px;
+}
+
+.items-scroll-area::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
 }

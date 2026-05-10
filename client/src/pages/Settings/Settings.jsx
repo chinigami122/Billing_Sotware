@@ -18,76 +18,49 @@ const Settings = () => {
 
     useEffect(() => {
         let isMounted = true;
-
         const loadProfile = async () => {
             try {
                 const response = await fetchProfile();
-                if (!isMounted) {
-                    return;
-                }
-
+                if (!isMounted) return;
                 setProfileData((prev) => ({
                     ...prev,
                     name: response.data?.name || "",
                     email: response.data?.email || ""
                 }));
             } catch (error) {
-                if (isMounted) {
-                    toast.error("Failed to load profile details");
-                }
+                if (isMounted) toast.error("Failed to load profile details");
             } finally {
-                if (isMounted) {
-                    setProfileLoading(false);
-                }
+                if (isMounted) setProfileLoading(false);
             }
         };
-
         loadProfile();
-
-        return () => {
-            isMounted = false;
-        };
+        return () => { isMounted = false; };
     }, []);
 
     const getCurrentUserEmailFromToken = () => {
         const token = localStorage.getItem("token");
-        if (!token) {
-            return null;
-        }
-
+        if (!token) return null;
         try {
             const payload = JSON.parse(atob(token.split(".")[1]));
             return payload?.sub || null;
-        } catch {
-            return null;
-        }
+        } catch { return null; }
     };
 
     const onChangeHandler = (event) => {
         const { name, value } = event.target;
-        setProfileData((prev) => ({
-            ...prev,
-            [name]: value
-        }));
+        setProfileData((prev) => ({ ...prev, [name]: value }));
     };
 
     const onSubmitHandler = async (event) => {
         event.preventDefault();
-
         const payload = {};
         const trimmedName = profileData.name.trim();
         const trimmedEmail = profileData.email.trim();
         const trimmedPassword = profileData.password.trim();
 
-        if (trimmedName) {
-            payload.name = trimmedName;
-        }
-        if (trimmedEmail) {
-            payload.email = trimmedEmail;
-        }
-        if (trimmedPassword) {
-            payload.password = trimmedPassword;
-        }
+        if (trimmedName) payload.name = trimmedName;
+        if (trimmedEmail) payload.email = trimmedEmail;
+        if (trimmedPassword) payload.password = trimmedPassword;
 
         if (Object.keys(payload).length === 0) {
             toast.error("Please provide at least one field to update");
@@ -98,23 +71,19 @@ const Settings = () => {
         try {
             const currentEmail = getCurrentUserEmailFromToken();
             const response = await updateProfile(payload);
-
             setProfileData((prev) => ({ ...prev, password: "" }));
 
-            const emailWasChanged =
-                payload.email &&
-                currentEmail &&
+            const emailWasChanged = payload.email && currentEmail &&
                 payload.email.toLowerCase() !== currentEmail.toLowerCase();
 
             if (emailWasChanged) {
-                toast.success("Profile updated. Please sign in again with your new email.");
+                toast.success("Profile updated. Please sign in again.");
                 localStorage.removeItem("token");
                 localStorage.removeItem("role");
                 setAuthData(null, null);
                 navigate("/login");
                 return;
             }
-
             toast.success(response.data?.message || "Profile updated successfully");
         } catch (error) {
             toast.error(error?.response?.data?.message || "Failed to update profile");
@@ -124,79 +93,110 @@ const Settings = () => {
     };
 
     return (
-        <div className="settings-container">
+        <div className="settings-page page-container">
             <header className="mb-4">
-                <h2 className="text-white m-0 fw-bold">Settings</h2>
-                <p className="text-secondary mb-0 mt-2">Update profile and preferences</p>
+                <h2 className="page-title m-0">Settings</h2>
+                <p className="text-secondary mt-1">Manage your account and shop preferences</p>
             </header>
 
             <div className="row g-4">
                 <div className="col-12 col-lg-7">
-                    <section className="settings-card h-100">
-                        <h5 className="text-light mb-3">Profile Settings</h5>
+                    <div className="glass-card p-4">
+                        <h5 className="section-title mb-4">
+                            <i className="bi bi-person-circle me-2"></i>
+                            Profile Settings
+                        </h5>
                         <form onSubmit={onSubmitHandler}>
-                            <div className="mb-3">
-                                <label htmlFor="name" className="form-label text-secondary">Name</label>
+                            <div className="form-group-modern mb-3">
+                                <label className="label-modern">Full Name</label>
                                 <input
-                                    id="name"
                                     name="name"
                                     type="text"
-                                    className="form-control dark-form-control"
+                                    className="input-custom"
                                     placeholder="Your name"
+                                    style={{width: '100%'}}
                                     value={profileData.name}
                                     onChange={onChangeHandler}
                                 />
                             </div>
 
-                            <div className="mb-3">
-                                <label htmlFor="email" className="form-label text-secondary">Email</label>
+                            <div className="form-group-modern mb-3">
+                                <label className="label-modern">Email Address</label>
                                 <input
-                                    id="email"
                                     name="email"
                                     type="email"
-                                    className="form-control dark-form-control"
-                                    placeholder="yourname@gmail.com"
+                                    className="input-custom"
+                                    placeholder="email@example.com"
+                                    style={{width: '100%'}}
                                     value={profileData.email}
                                     onChange={onChangeHandler}
                                 />
                             </div>
 
-                            <div className="mb-4">
-                                <label htmlFor="password" className="form-label text-secondary">Password</label>
+                            <div className="form-group-modern mb-4">
+                                <label className="label-modern">New Password</label>
                                 <input
-                                    id="password"
                                     name="password"
                                     type="password"
-                                    className="form-control dark-form-control"
-                                    placeholder="**********"
+                                    className="input-custom"
+                                    placeholder="••••••••"
+                                    style={{width: '100%'}}
                                     value={profileData.password}
                                     onChange={onChangeHandler}
                                 />
+                                <small className="text-secondary opacity-50">Leave blank to keep current password</small>
                             </div>
 
-                            <button type="submit" className="btn btn-warning px-4" disabled={loading || profileLoading}>
-                                {loading ? "Saving..." : profileLoading ? "Loading..." : "Save Changes"}
+                            <button type="submit" className="btn-custom py-3 px-5" disabled={loading || profileLoading}
+                                style={{background: 'linear-gradient(90deg, var(--accent-primary), var(--accent-secondary))', color: 'white'}}
+                            >
+                                {loading ? "Saving Changes..." : "Save Profile"}
                             </button>
                         </form>
-                    </section>
+                    </div>
                 </div>
 
                 <div className="col-12 col-lg-5">
-                    <section className="settings-card h-100">
-                        <h5 className="text-light mb-3">System Preferences</h5>
-                        <div className="settings-preference">
-                            <span className="text-light">Email Notifications</span>
-                            <span className="badge bg-secondary">Enabled</span>
+                    <div className="glass-card p-4">
+                        <h5 className="section-title mb-4">
+                            <i className="bi bi-gear me-2"></i>
+                            System Preferences
+                        </h5>
+                        <div className="preference-item mb-3">
+                            <div className="preference-info">
+                                <h6 className="m-0">Email Notifications</h6>
+                                <p className="m-0 small text-secondary">Receive alerts for new orders</p>
+                            </div>
+                            <div className="form-check form-switch">
+                                <input className="form-check-input" type="checkbox" defaultChecked />
+                            </div>
                         </div>
-                        <div className="settings-preference">
-                            <span className="text-light">Auto Refresh Orders</span>
-                            <span className="badge bg-secondary">Every 30 sec</span>
+                        
+                        <div className="preference-item mb-3">
+                            <div className="preference-info">
+                                <h6 className="m-0">Auto-Refresh</h6>
+                                <p className="m-0 small text-secondary">Dashboard auto-updates (30s)</p>
+                            </div>
+                            <div className="form-check form-switch">
+                                <input className="form-check-input" type="checkbox" defaultChecked />
+                            </div>
                         </div>
-                        <div className="settings-preference">
-                            <span className="text-light">Currency</span>
-                            <span className="badge bg-secondary">USD</span>
+
+                        <div className="preference-item mb-3">
+                            <div className="preference-info">
+                                <h6 className="m-0">Currency Format</h6>
+                                <p className="m-0 small text-secondary">Display prices in USD ($)</p>
+                            </div>
+                            <span className="badge bg-secondary-subtle text-secondary px-3">USD ($)</span>
                         </div>
-                    </section>
+
+                        <div className="divider-modern my-4"></div>
+
+                        <h5 className="section-title mb-4 text-danger">Danger Zone</h5>
+                        <button className="btn-custom-outline w-100 border-danger text-danger py-2">
+                            Reset All Data
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -204,4 +204,3 @@ const Settings = () => {
 };
 
 export default Settings;
-

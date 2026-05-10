@@ -1,23 +1,23 @@
 import './DisplayCategory.css';
-import Category from '../Category/Category';
+import React from 'react';
 
 const DisplayCategory = ({ categories, selectedCategory, setSelectedCategory }) => {
     return (
-        <div className="row g-3" style={{ width: '100%', margin: 0 }}>
+        <div className="category-pill-bar">
+            <div 
+                className={`category-pill ${selectedCategory === null ? 'active' : ''}`}
+                onClick={() => setSelectedCategory(null)}
+            >
+                <span className="category-pill-name">All Categories</span>
+            </div>
             {categories.map((category) => (
                 <div
                     key={category.categoryId}
-                    className="col-md-3 col-sm-6"
-                    style={{ display: 'flex', justifyContent: 'center' }}
+                    className={`category-pill ${selectedCategory === category.categoryId ? 'active' : ''}`}
+                    onClick={() => setSelectedCategory(category.categoryId)}
                 >
-                    <Category
-                        categoryName={category.name}
-                        imgUrl={category.imgUrl}
-                        numberOfItems={category.items}
-                        bgColor={category.bgColor}
-                        isSelected={selectedCategory === category.categoryId}
-                        onClick={() => setSelectedCategory(category.categoryId)}
-                    />
+                    <img src={category.imgUrl} alt={category.name} className="category-pill-icon" />
+                    <span className="category-pill-name">{category.name}</span>
                 </div>
             ))}
         </div>
